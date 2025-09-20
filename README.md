@@ -1,3 +1,9 @@
-Integración del análisis de sentimiento noticioso en modelos predictivos del precio del café arábica: un caso de su aplicación en la gestión de riesgos para la industria cafetera colombiana desde la perspectiva de compra.
-Proyecto en desarrollo 
-Este estudio evalúa la integración de modelos de predicción del precio del café arábica con el análisis de sentimiento de noticias. Empleando modelos híbridos que combinan técnicas de machine learning para analizar los precios históricos del commodity adicionando una variable de procesamiento de lenguaje natural, que extrae el sentimiento de noticias relacionadas con el mercado del café como el clima en los principales países productores, eventos geopolíticos, y fluctuaciones en la demanda. El objetivo es demostrar que la inclusión del sentimiento noticioso mejora la capacidad predictiva de los modelos tradicionales. El resultado estructura la base de un modelo de gestión de riesgos para la industria colombiana de café mitigando la volatilidad del mercado y permitiendo una toma de decisiones más informada.
+TITULO: Integración del análisis de sentimiento noticioso en modelos predictivos del precio del café arábica: un caso de su aplicación en la gestión de riesgos para la industria cafetera colombiana desde la perspectiva de compra.
+
+
+
+ESTADO DEL PROYECTO: Proyecto en desarrollo 
+
+
+
+DESCRIPCIÓN GENERAL: Este proyecto de investigación se enfoca en evaluar cómo la integración del análisis de sentimiento noticioso puede mejorar la precisión de los modelos de predicción del precio del café arábica. El estudio propone un enfoque híbrido que combina técnicas de aprendizaje automático (Machine Learning) con el procesamiento de lenguaje natural (PLN) para analizar datos históricos de precios y el sentimiento extraído de noticias relevantes para el mercado cafetero.
