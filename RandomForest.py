@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 
 # 1. Cargar el archivo de datos
 file_path = "Datos históricos Futuros café C EE.UU. (BD).csv"
-df = pd.read_csv(file_path)
+df = pd.read_csv(file_path, delimiter=',')
 
 # Mostrar las primeras filas y la información del DataFrame
 print("--- Datos iniciales ---")
@@ -15,7 +15,11 @@ print(df.info())
 
 # 2. Preprocesamiento de los datos
 # Convertir la columna de fecha a formato datetime para una mejor manipulación
-df['Fecha'] = pd.to_datetime(df['Fecha'])
+df['Fecha'] = pd.to_datetime(df['Fecha'], format='%d.%m.%Y')
+
+# Clean and convert the 'Último' column to numeric
+df['Último'] = df['Último'].str.replace('"', '', regex=False).str.replace(',', '.', regex=False)
+df['Último'] = pd.to_numeric(df['Último'])
 
 # Crear variables 'lagged' (retrasadas) para la predicción
 # Esto es esencial en series de tiempo para usar precios anteriores como variables predictoras
