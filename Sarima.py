@@ -13,8 +13,7 @@ file_path = '/content/drive/MyDrive/Seminario_TG/Datos históricos Futuros café
 # Cargar el archivo CSV en un DataFrame
 df = pd.read_csv(file_path, delimiter=',', quotechar='"')
 
-# Convertir el formato de la columna 'Fecha'
-# Cambiar los puntos por barras y luego convertir a formato de fecha
+
 df['Fecha'] = df['Fecha'].str.replace('.', '/')
 df['Fecha'] = pd.to_datetime(df['Fecha'], format='%d/%m/%Y')
 df.set_index('Fecha', inplace=True)
@@ -32,9 +31,6 @@ df.dropna(subset=['Último'], inplace=True)
 # Seleccionar la serie de tiempo y asegurarse de que esté ordenada
 time_series = df['Último'].sort_index()
 
-# ---------------------------------------------
-# Paso 3: Aplicar el modelo SARIMA
-# ---------------------------------------------
 
 # Definir los parámetros del modelo SARIMA
 # (p, d, q) y (P, D, Q, S)
@@ -55,10 +51,7 @@ results = model.fit(disp=False)
 
 # Imprimir un resumen de los resultados del modelo
 print(results.summary())
-
-# ---------------------------------------------
-# Paso 4: Visualizar resultados y predicciones
-# ---------------------------------------------
+------------------------------
 
 # Realizar predicciones
 # Obtener las predicciones del modelo para los datos originales
