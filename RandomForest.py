@@ -10,7 +10,7 @@ df = pd.read_csv(file_path, delimiter=',')
 # Mostrar las primeras filas y la información del DataFrame
 print("--- Datos iniciales ---")
 print(df.head())
-print("\n--- Información del DataFrame ---")
+print("\n-_- Información del DataFrame ---")
 print(df.info())
 
 # 2. Preprocesamiento de los datos
