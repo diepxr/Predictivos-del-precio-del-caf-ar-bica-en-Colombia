@@ -1,0 +1,30 @@
+Error Cuadrático Medio (MSE): 112.9532
+Error Absoluto Medio (MAE): 8.1504
+Error Cuadrático Medio (RMSE): 10.6279
+Error Porcentual Absoluto Medio (MAPE): 2.3519%
+Error Cuadrático Medio Relativo (RRMSE): 3.1279%
+Error Cuadrático Medio Normalizado Relativo (RNMSE): 7.1738%
+Error Cuadrático Medio Normalizado Relativo (RNMSE): 7.1738%
+Error Absoluto Escalado Medio (MASE): 3.7152
+Coeficiente Theil-U: 1.2345
+
+
+*Resumen de Errores de Magnitud (MSE, RMSE y MAE)*
+Error Cuadrático Medio (MSE: 112.2029) y Error Cuadrático Medio (RMSE: 10.5926): Estas métricas muestran que los errores de tu modelo son relativamente altos. El MSE penaliza fuertemente los errores grandes, indicando que hubo predicciones que se desviaron significativamente de los valores reales. El RMSE de 10.59 es la métrica más fácil de interpretar, ya que significa que, en promedio, las predicciones de tu modelo se desvían alrededor de 10.59 unidades (por ejemplo, dólares) del valor real.
+
+Error Absoluto Medio (MAE: 8.6773): Este valor indica que el error promedio de tu modelo es de 8.67 unidades. Como el MAE es más bajo que el RMSE, esto confirma que el modelo tiene algunos errores grandes (valores atípicos) que están elevando el RMSE. El MAE es una medida más robusta del error promedio.
+
+2. Resumen de Errores Relativos y Porcentuales (MAPE, RRMSE y RNMSE)
+Error Porcentual Absoluto Medio (MAPE: 2.5144%): Este es un resultado muy positivo. Un MAPE de 2.51% significa que, en promedio, tus predicciones están desviadas solo un 2.51% del valor real. Este es un indicador excelente para un análisis financiero y demuestra que tu modelo tiene una precisión aceptable en términos relativos.
+
+Error Cuadrático Medio Relativo (RRMSE: 3.0879%) y Error Cuadrático Medio Normalizado Relativo (RNMSE: 6.8738%): Estas métricas normalizan el error. Los valores indican que el error de tu modelo es relativamente pequeño en comparación con el valor promedio y el rango total de los datos.
+
+3. Resumen de Métricas de Referencia (MASE y Theil-U)
+Error Absoluto Escalado Medio (MASE: 3.9835): Este es el resultado más crítico. Un MASE mayor a 1 indica que tu modelo de Random Forest se desempeña peor que un pronóstico simple o "ingenuo". El pronóstico ingenuo es tan simple como decir que el valor de mañana será el mismo que el de hoy. Este resultado sugiere que tu modelo no está aportando un valor real sobre una suposición básica.
+
+Coeficiente Theil-U (1.4266): Similar al MASE, un valor mayor a 1 para el Coeficiente Theil-U significa que tu modelo es menos preciso que un pronóstico ingenuo. Confirma que las predicciones de tu modelo no son mejores que simplemente suponer que el precio de hoy se repetirá mañana.
+
+Conclusión Profesional
+Aunque las métricas porcentuales (MAPE, RRMSE) sugieren una precisión decente, las métricas de referencia clave (MASE y Theil-U) revelan un problema fundamental. Tu modelo de Random Forest, a pesar de su complejidad, no logra superar a una línea base muy simple.
+
+Recomendación: Es muy probable que el modelo de Random Forest no sea el más adecuado para predecir series de tiempo, ya que no maneja bien la dependencia temporal. Se aconseja utilizar modelos específicos para series de tiempo como SARIMAX, Prophet o redes neuronales recurrentes (RNNs) que están diseñadas para capturar patrones secuenciales y dependencias temporales.
