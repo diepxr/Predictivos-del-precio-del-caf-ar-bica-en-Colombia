@@ -1,3 +1,6 @@
+Conjunto de entrenamiento: 11382 filas 99,6%
+Conjunto de prueba: 50 filas           0,4%
+
 Error Cuadrático Medio (MSE): 112.9532
 Error Absoluto Medio (MAE): 8.1504
 Error Cuadrático Medio (RMSE): 10.6279
