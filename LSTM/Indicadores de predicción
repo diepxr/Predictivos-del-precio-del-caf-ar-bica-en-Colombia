@@ -1,0 +1,23 @@
+Error Porcentual Absoluto Medio (MAPE)
+1.69%	
+Excelente: En promedio, el pronóstico se desvía solo un 1.69% del valor real. Este es un nivel de precisión muy alto en la mayoría de los contextos de pronóstico.
+
+Raíz del Error Cuadrático Medio Normalizado (RNMSE/RRMSE)
+2.76%	
+Excelente: El error cuadrático medio (RMSE) es extremadamente bajo en relación con el valor promedio de la variable, reforzando la conclusión de alta precisión.
+
+Error Absoluto Medio (MAE)
+3.1391	
+El error promedio absoluto es de aproximadamente 3.14 unidades de la variable original.
+
+Raíz del Error Cuadrático Medio (RMSE)
+4.7670
+El RMSE es significativamente mayor que el MAE (4.77 vs 3.14). Esto sugiere que el modelo tiene algunos errores grandes o valores atípicos (outliers) que están penalizando fuertemente la métrica cuadrática.
+
+Coeficiente Theil-U
+0.7673
+Bueno: Dado que U<1, el modelo es mejor que un pronóstico ingenuo de paseo aleatorio (random walk), lo que significa que el modelo aporta valor.
+
+Error Absoluto Escalonado Medio (MASE)
+1.5286
+Débil: Dado que MASE>1, el error promedio absoluto del modelo es peor que el de un pronóstico ingenuo simple que predice el último valor observado. Específicamente, el modelo actual es un 52.86% peor que el modelo ingenuo.
