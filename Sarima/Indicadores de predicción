@@ -1,0 +1,23 @@
+MAE 
+133.55
+Es el error promedio en las unidades de la variable original.
+
+RMSE
+145.09
+Es ligeramente mayor que el MAE, lo que sugiere la presencia de errores grandes u atípicos (outliers), ya que el RMSE penaliza más los errores grandes.
+
+MAPE
+37.53%
+En promedio, el pronóstico se desvía un 37.53% del valor real. Este es un porcentaje de error muy alto.
+
+RNMSE/RRMSE
+42.34%
+El error cuadrático medio (RMSE) representa el 42.34% del valor de referencia (generalmente la media o el rango de los datos). Este valor es muy alto e indica una precisión pobre.
+
+MASE
+62.57
+Es el indicador más crítico. Un modelo es bueno si MASE<1. Un valor de 62.57 significa que el error del modelo es 62.57 veces mayor que el error de un pronóstico ingenuo (simplemente predecir el último valor observado).
+
+Theil-U
+12.62
+Un valor de U<1 indica que el modelo es mejor que un paseo aleatorio (random walk/ingenuo). Un valor de 12.62 indica que el modelo es significativamente peor que simplemente usar el último valor observado como pronóstico.
