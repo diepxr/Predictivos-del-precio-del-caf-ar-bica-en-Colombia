@@ -24,7 +24,7 @@ dataset = data['Último'].values.reshape(-1, 1)
 scaler = MinMaxScaler(feature_range=(0, 1))
 scaled_data = scaler.fit_transform(dataset)
 
-train_size = int(len(scaled_data) * 0.8)
+train_size = int(len(scaled_data) * 0.95)
 train_data = scaled_data[:train_size]
 test_data = scaled_data[train_size:]
 
@@ -36,7 +36,7 @@ def create_dataset(dataset, look_back=1):
         Y.append(dataset[i + look_back, 0])
     return np.array(X), np.array(Y)
 
-look_back = 60 
+look_back = 60
 
 X_train, Y_train = create_dataset(train_data, look_back)
 X_test, Y_test = create_dataset(test_data, look_back)
@@ -47,8 +47,8 @@ X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], 1))
 
 model = Sequential()
 model.add(LSTM(
-    units=50, 
-    return_sequences=True, 
+    units=50,
+    return_sequences=True,
     input_shape=(look_back, 1)
 ))
 model.add(LSTM(units=50))
@@ -121,3 +121,50 @@ df_comparacion['Error_Porcentual'] = (df_comparacion['Error_Absoluto'] / df_comp
 
 print("\n--- Tabla Comparativa (Real vs. Pronosticado, primeras 10 filas) ---")
 print(df_comparacion.head(10).round(4))
+
+forecast_days = 30
+
+last_sequence = scaled_data[-look_back:]
+current_input = last_sequence.reshape(1, look_back, 1)
+future_predictions_scaled = []
+
+for i in range(forecast_days):
+    
+    next_prediction_scaled = model.predict(current_input, verbose=0)
+
+    future_predictions_scaled.append(next_prediction_scaled[0, 0])
+
+    current_input_flat = current_input.flatten()
+
+    current_input_flat = np.delete(current_input_flat, 0)
+
+    current_input_flat = np.append(current_input_flat, next_prediction_scaled[0, 0])
+    
+    current_input = current_input_flat.reshape(1, look_back, 1)
+
+future_predictions = scaler.inverse_transform(np.array(future_predictions_scaled).reshape(-1, 1)).flatten()
+
+
+last_date = data.index[-1]
+future_dates = pd.date_range(start=last_date + pd.Timedelta(days=1), periods=forecast_days)
+
+
+df_future_forecast = pd.DataFrame({
+    'Fecha': future_dates,
+    'Pronóstico': future_predictions
+})
+
+print(f"\n--- Pronóstico a {forecast_days} días futuros ---")
+print(df_future_forecast.head(10).round(4))
+
+
+output_path = '/content/drive/MyDrive/Seminario_TG/Pronostico_Cafe_LSTM_30dias.csv'
+
+try:
+    df_future_forecast.to_csv(output_path, index=False, sep=';', decimal=',')
+    print("\n--- Exportación Exitosa ---")
+    print(f"El pronóstico ha sido guardado en Google Drive en la ruta:")
+    print(f"'{output_path}'")
+except Exception as e:
+    print(f"\n¡ERROR al guardar el archivo! Asegúrate de que la ruta de Google Drive sea accesible.")
+    print(f"Error: {e}")
