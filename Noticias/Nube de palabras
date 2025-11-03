@@ -1,12 +1,10 @@
 from collections import Counter
 import re
-from wordcloud import WordCloud
-import matplotlib.pyplot as plt
 
-def encontrar_palabras_mas_repetidas(oraciones):
+def encontrar_palabras_mas_repetidas(oraciones, n=5):
     """
-    Procesa las oraciones y devuelve un objeto Counter con las frecuencias
-    de las palabras, filtrando las stop words.
+    Encuentra las 'n' palabras más repetidas en un grupo de oraciones,
+    filtrando las stop words comunes.
     """
     # Lista de stop words comunes en español para eliminar palabras irrelevantes
     stop_words = set([
@@ -14,49 +12,34 @@ def encontrar_palabras_mas_repetidas(oraciones):
         'de', 'del', 'al', 'a', 'en', 'por', 'con', 'que', 'se', 'es', 'su',
         'sus', 'debido', 'una', 'los', 'al', 'que', 'en', 'con', 'sin',
         'para', 'como', 'más', 'menos', 'tras', 'mientras', 'entre', 'esto',
-        'un', 'millones', 'millón', 'cayeron', 'debido', 'las', 'por', 'del',
-        # Stop words adicionales comunes en tu texto de ejemplo:
-        'sacos', 'cafe', 'arábica', 'brasil', 'futuros', 'precios', 'exportaciones',
-        'icc', 'arancel', 'años', 'septiembre', 'millones', 'kilos', '60', 'kg',
-        'cecafé', 'totalizaron', 'totalizando', 'interanual', '2025', '2024/25'
+        'un', 'millones', 'millón', 'cayeron', 'debido', 'las', 'por', 'del'
+        # Añade más si lo ves necesario
     ])
 
+    # 1. Unir todas las oraciones en un solo string
     texto_completo = " ".join(oraciones)
+
+    # 2. Preprocesar el texto (minúsculas y tokenización)
+    # re.findall encuentra todas las secuencias alfanuméricas
     palabras = re.findall(r'\b\w+\b', texto_completo.lower())
 
-    # Filtramos la lista de palabras
+    # 3. Filtrar las stop words
     palabras_filtradas = [palabra for palabra in palabras if palabra not in stop_words and len(palabra) > 2]
 
-    # Devolvemos el objeto Counter con el conteo
-    return Counter(palabras_filtradas)
+    # 4. Contar la frecuencia
+    conteo_palabras = Counter(palabras_filtradas)
 
+    # 5. Obtener las 'n' palabras más comunes
+    palabras_mas_comunes = conteo_palabras.most_common(n)
 
-def generar_nube_de_palabras(conteo_palabras):
-    """
-    Genera y muestra la nube de palabras a partir del conteo de palabras.
+    return palabras_mas_comunes
 
-    :param conteo_palabras: Un objeto Counter con las palabras y sus frecuencias.
-    """
-    # 1. Crear el objeto WordCloud
-    # Le pasamos el diccionario de frecuencias (conteo_palabras) para que
-    # determine el tamaño de la fuente.
-    wordcloud = WordCloud(
-        width=800, 
-        height=400, 
-        background_color='white',
-        max_words=100, # Limita el número de palabras en el gráfico
-        colormap='viridis' # Define la paleta de colores
-    ).generate_from_frequencies(conteo_palabras)
-
-    # 2. Mostrar la imagen con Matplotlib
-    plt.figure(figsize=(10, 5))
-    plt.imshow(wordcloud, interpolation='bilinear')
-    plt.axis("off") # Oculta los ejes (X e Y)
-    plt.title("Nube de Palabras de las Noticias de Café", fontsize=15)
-    plt.show() # Muestra el gráfico 
-
-# --- Ejemplo de Uso ---
-grupo_de_oraciones = [
+# --------------------------------------------------
+# --- Ejemplo de Uso (Corregido) ---
+# Se utiliza el texto que proporcionaste, asegurándose de que cada oración sea un string
+# dentro de la lista (delimitado por comillas y comas).
+# --------------------------------------------------
+grupo_de_oraciones_corregido = [
     "Los futuros de café continúan al alza debido a una caída en los inventarios de café arábica en el ICE, alcanzando 579,961 sacos, su nivel más bajo en 18 meses.",
     "Los futuros de café arábica subieron debido a una significativa reducción de las existencias en el ICE en los últimos días.",
     "Los futuros del café bajaron después de que el presidente de EE.UU., Donald Trump, dijo que podría reunirse con el presidente de Brasil, Luiz Inácio Lula da Silva, la próxima semana, dando esperanzas a los participantes del mercado de café de que el arancel estadounidense del 50% al café de Brasil pueda ser revisado.",
@@ -82,10 +65,29 @@ grupo_de_oraciones = [
     "Los futuros del café arábiga en el ICE subieron, impulsados por un pronóstico de clima seco en Brasil y una caída de las acciones en las bolsas.",
     "Los futuros de café arábica bajaron debido a que las existencias en el ICE disminuyeron en 775 sacos de 60kg.",
     "Según la Federación Nacional de Cafeteros, la producción de café de Colombia aumentó un 17% en 2024/25, mientras que las exportaciones crecieron un 12% en comparación con la temporada anterior.",
-]
+    "Los futuros del café en ICE subieron mientras aumentan las tensiones comerciales entre EE.UU. y Colombia.",
+    "Los futuros de café arábica en el ICE subieron en medio de una caída de las existencias en bolsas certificadas y pronósticos meteorológicos erráticos en Brasil.",
+    "Las existencias de café arábica certificadas por ICE disminuyeron en 3,104 al 23 de octubre de 2025, según London Stock Exchange Group.",
+    "Los futuros del café arábigo en el ICE subieron a un máximo de ocho meses, impulsados por la caída de las existencias en las bolsas.",
+    "Los futuros del café arábica en el ICE subieron, impulsados por la amenaza de que EE.UU. pueda imponer aranceles punitivos a Colombia.",
+    "Los futuros de café arábica bajaron, debido a la continua reducción de las existencias certificadas por ICE, que disminuyeron en 1,128 sacos al 28 de octubre de 2025, según London Stock Exchange Group.",
+    "Los futuros de café arábica extendieron su tendencia bajista, debido a la continua reducción de las existencias certificadas por ICE, que disminuyeron en 2,970 sacos al 27 de octubre de 2025, según London Stock Exchange Group.",
+    "Los tostadores de café en EE.UU. están agotando sus reservas mientras esperan el resultado de las negociaciones comerciales en curso entre EE.UU. y Brasil, conversaciones que podrían determinar si tendrán que pagar precios mucho más altos por fuentes alternativas de café.",
+    "Las exportaciones de café de Brasil en 2025/26 se estiman entre 39 y 41 millones de sacos, en comparación con los 45.6 millones de sacos de la temporada anterior, según estimaciones de Rabobank.",
+    "Las existencias de café arábica certificadas por ICE disminuyeron en 14,747 al 31 de octubre de 2025, según London Stock Exchange Group."
 
-# 1. Obtener el conteo de palabras (el diccionario de frecuencias)
-conteo_final = encontrar_palabras_mas_repetidas(grupo_de_oraciones)
 
-# 2. Generar y mostrar la nube de palabras
-generar_nube_de_palabras(conteo_final)
+
+] # ¡El corchete de cierre que faltaba!
+
+# Encontrar las 5 palabras más repetidas
+n_palabras = 5
+resultado = encontrar_palabras_mas_repetidas(grupo_de_oraciones_corregido, n_palabras)
+
+print(f"Total de oraciones procesadas: {len(grupo_de_oraciones_corregido)}")
+print("--------------------------------------------------")
+print(f"Las {n_palabras} palabras más repetidas (filtrando 'stop words') son:")
+
+# Imprimir el resultado
+for palabra, frecuencia in resultado:
+    print(f"- '{palabra}' se repite {frecuencia} veces")
